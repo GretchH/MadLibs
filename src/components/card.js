@@ -8,37 +8,27 @@ class Card extends Component {
         super()
 
         this.state = {
-            color: 'BLUE',
+            color: '',
             pluralNoun: ''
-        }
+        } 
+        
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+ 
 
-        this.handleInputChange = this.handleInputChange.bind(this)
+    handleInputChange(event) {
+        this.setState({ [event.target.name]: event.target.value })
+        console.log(event.target.name);
     }
 
-
-    handleInputChange() {
-        console.log('this is the value', event.target.value);
-        this.setState({ color: 'red' })
-    }
-
-   render() {
-
-        return(
+    render() {
+        return (
             <div className="card">
                 <h1>{this.state.color}</h1>
-                <input onChange={(event) => this.handleInputChange(event)}/>
+                { Input('Color', this.state.color, this.handleInputChange, 'color')}
+                { Input('Plural Noun', this.state.pluralNoun, this.handleInputChange, 'pluralNoun') }
             </div>
-            
         )
-
-
-       return (
-           <div className="card">
-               { Input('Color') }
-               { Input('Plural Noun') }
-           </div>
-       )
-   } 
+    }
 }
-//
 export default Card;
