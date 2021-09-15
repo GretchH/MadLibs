@@ -25,14 +25,25 @@ class Card extends Component {
             nounThree: '',
             celebFour: '',
             adjectiveFive: '',
+            contentVisible: false
         } 
         
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
  
 
     handleInputChange(event) {
         this.setState({ [event.target.name]: event.target.value })
+    }
+
+    handleFormSubmit(event) {
+        event.preventDefault()
+        this.setState({ contentVisible: !this.state.contentVisible })
+       
+// By providing the exclamation point, it's going to switch this to true and set it and then this is going to be true. By saying ! or not, it's going to get the opposite value.
+ 
+
     }
 
     render() {
@@ -41,7 +52,7 @@ class Card extends Component {
 
             {title: 'Color', state: this.state.color, name: 'color'},
             {title: 'Plural Noun', state: this.state.pluralNoun, name: 'pluralNoun'},
-            {title: 'Adjective', state: this.state.adjective, name: 'adjectiveOne'},
+            {title: 'Adjective', state: this.state.adjectiveOne, name: 'adjectiveOne'},
             {title: 'Celebrity', state: this.state.celebOne, name: 'celebOne'},
 
             {title: 'Adjective', state: this.state.adjectiveTwo, name: 'adjectiveTwo'},
@@ -61,14 +72,19 @@ class Card extends Component {
         ]
 
         return (
-            <div className="card">
+            <form onSubmit={this.handleFormSubmit} className="card">
+                <div className='card__inputs'>
                 {
                     inputData.map(data => Input( (data), this.handleInputChange ))
                 }
                 <Content data={this.state}/> 
-                
-
-            </div>
+                </div>
+                <button type="submit">{!this.state.contentVisible ? 'Generate Mad lib' : 'Clear Form'}</button> 
+                {/* how to make button form */}
+                {
+                    this.state.contentVisible ? <Content data={this.state}/> : ''
+                }
+            </form>
         )
     }
 }
